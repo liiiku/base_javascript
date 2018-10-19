@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>防抖函数中，带有事件对象</title>
+</head>
+<body>
+  <input type="text" id="inp">
+  <script>
+    /*
+      当ajax请求中传递事件对象的时候
+    */
+    var oInp = document.getElementById('inp')
+    var timer = null
+    function ajax(e) {
+      console.log(e, this.value) // undefined "d" 为什么这里是undefined？因为20行直接的事件处理函数不是ajax了，而是外面包的那层function，所以这个函数要传参数e
+    }
+    oInp.oninput = function(e) { // 这个函数在执行的时候是js引擎帮我们来执行的，js引擎在执行的时候，一定会在这里会帮我们传递一个实际参数
+      // console.log(arguments)
+      var _self = this, _arg = arguments
+      clearTimeout(timer)
+      timer = setTimeout(function() {
+        ajax.apply(_self, _arg) // 这里不能直接写arguments的原因是，这里的arguments是24行这个函数的，我们实际要拿到的是20行的这个事件对象
+      }, 1000)
+    }
+  </script>
+</body>
+</html>

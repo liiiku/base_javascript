@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>防抖函数封装</title>
+</head>
+<body>
+    <input type="text" id="inp">
+    <script>
+      /*
+        不再是单纯的ajax请求防抖，可以对传递的任何执行函数进行防抖
+      */
+      var oInp = document.getElementById('inp')
+      /*
+        handler: 对哪个功能函数进行防抖
+        delay: 时间
+      */
+      function debounce(handler, delay) {
+        var timer = null
+        return function() {
+          var _self = this, _arg = arguments
+          clearTimeout(timer)
+          timer = setTimeout(function() {
+            handler.apply(_self, _arg)
+          }, delay)
+        }
+      }
+
+      function ajax(e) {
+        console.log(e, this.value) // undefined "d" 为什么这里是undefined？因为20行直接的事件处理函数不是ajax了，而是外面包的那层function，所以这个函数要传参数e
+      }
+      oInp.oninput = debounce(ajax, 1000)
+    </script>
+</body>
+</html>

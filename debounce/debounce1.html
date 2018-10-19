@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>防抖基础逻辑</title>
+</head>
+<body>
+  <input type="text" id="inp">
+  <script>
+    /*
+      实时请求的基本逻辑
+    */
+    var oInp = document.getElementById('inp')
+    var timer = null
+    function ajax() {
+      console.log(this.value)
+    }
+    oInp.oninput = function() {
+      var _self = this
+      clearTimeout(timer)
+      timer = setTimeout(function() {
+        ajax.apply(_self)
+      }, 1000)
+    }
+  </script>
+</body>
+</html>

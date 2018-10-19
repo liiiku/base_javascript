@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>节流</title>
+</head>
+<body>
+  <div id="show">0</div>
+  <button id="btn">click</button>
+  <script>
+    /* 
+      我们希望在指定几秒钟，不管你点击多少次，我都算你一次
+    */
+    var oDiv = document.getElementById('show')
+    var oBtn = document.getElementById('btn')
+    /*
+      第一次点击是可以的，1000之内的所有点击都不会触发 1200毫秒的时候，又点击了一次，这个时候，到2200之间的所有点击页都不会触发
+    */
+    function throttle(handler, wait) {
+      var lastTime = 0
+      return function(e) {
+        // arguments 存的是实际参数
+        var nowTime = new Date().getTime()
+        if (nowTime - lastTime > wait) {
+          handler.apply(this, arguments)
+          lastTime = nowTime
+        }
+      }
+    }
+
+    function buy(e) {
+      console.log(this, e) // 这里的e为什么是undefined，因为buy是我们自己调用的，但是我们并没有传递事件对象
+      oDiv.innerText = parseInt(oDiv.innerText) + 1
+    }
+
+    // oBtn.onclick = buy // 没有节流函数就直接这样写了
+    oBtn.onclick = throttle(buy, 1000)
+  </script>
+</body>
+</html>
