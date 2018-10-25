@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>promise API用法</title>
+</head>
+<body>
+  <script>
+    // Promise status
+    // Promise {<resolved>: 1} 始终为这个 状态的转变是不可逆的
+    let p = new Promise((resolve, reject) => {
+      resolve(1)
+      reject(1)
+    })
+
+    // Promise.resolve()
+    // Promise.reject()
+    // Promise.all()
+    // Promise.race()
+    // Promise.prototype.then()
+    // Promise.prototype.catch()
+    // 都会产生一个promise对象
+    // var p1 = Promise.resolve(1)  // Promise {<resolved>: 1}
+    // var p2 = Promise.reject(2)  // Promise {<rejected>: 2}
+
+    // 参数是多个promise过程的数组
+    // Promise.all(PromiseArray)
+    // Promise.race(PromiseArray)
+
+    // var p1 = new Promise(resolve => resolve(1))
+    // var p2 = Promise.resolve(2)
+    // var p3 = Promise.reject(3)
+    // var p22 = Promise.reject(22)
+    // var p4 = Promise.all([p1, p2]) // resolved [1, 2]
+    // var p5 = Promise.all([p1, p2, p3]) // rejected 3
+    // var p6 = Promise.all([p1, p22, p3]) // rejected 22 只要遇到reject，后面的就不管了
+
+    // race 它可以是完成（ resolves），也可以是失败（rejects），这要取决于第一个完成的方式是两个中的哪个。
+    var p1 = new Promise(resolve => setTimeout(() => {
+      resolve(1)
+    }, 3000))
+    var p2 = Promise.reject(2)
+    var p3 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(3)
+      }, 2000)
+    })
+    var p4 = Promise.race([p1, p2, p3])
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>简单promise用法</title>
+</head>
+<body>
+  <script>
+    function loadURL(url) {
+      var img = new Image()
+      return new Promise((resolve, reject) => {
+        img.onload = function () {
+          resolve(img)
+        }
+        img.onerror = function () {
+          reject(`${url} is not an effective URL`)
+        }
+        img.src = url
+      })
+    }
+
+    // loadURL('./xxx.png').then(img => document.body.appendChild(img), err => console.log(err))
+    loadURL('http://img4.imgtn.bdimg.com/it/u=2132041786,3575426926&fm=26&gp=0.jpg').then(img => document.body.appendChild(img), err => console.log(err))
+  </script>
+</body>
+</html>

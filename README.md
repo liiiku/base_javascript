@@ -157,3 +157,51 @@ arr.filter(item => item.name.length === 3)
   { name: "a11", age: 29 }
 ]
 ```
+
+5. forEach() 和 map()
+
+`forEach()` 没有返回值
+
+```
+arr[].forEach(function(value,index,array){
+
+　　//do something
+
+})
+```
+- 参数：`value` 数组中的当前项, `index` 当前项的索引, `array` 原始数组；
+- 数组中有几项，那么传递进去的匿名回调函数就需要执行几次；
+- 理论上这个方法是没有返回值的，仅仅是遍历数组中的每一项，不对原来数组进行修改；但是可以自己通过数组的索引来修改原来的数组
+
+```
+var ary = [12,23,24,42,1];  
+var res = ary.forEach(function (item,index,input) {  
+  input[index] = item*10;  
+})  
+console.log(res); //--> undefined;  
+console.log(ary); //--> 通过数组索引改变了原数组；
+```
+
+`map()` 有返回值, 可以`return`出来
+
+```
+arr[].map(function(value,index,array){
+
+　　//do something
+
+　　return XXX
+
+})
+```
+- 参数：`value` 数组中的当前项, `index` 当前项的索引, `array`原始数组；
+- 区别：`map`的回调函数中支持`return`返回值；`return`的是啥，相当于把数组中的这一项变为啥（并不影响原来的数组，只是相当于把原数组克隆一份，把克隆的这一份的数组中的对应项改变了）；
+
+```
+var ary = [12,23,24,42,1];  
+var res = ary.map(function (item,index,input) {  
+  return item*10;  
+})  
+console.log(res); //-->[120,230,240,420,10];  原数组拷贝了一份，并进行了修改
+console.log(ary); //-->[12,23,24,42,1]；  原数组并未发生变化
+```
+
