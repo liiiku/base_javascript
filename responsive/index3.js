@@ -5,9 +5,12 @@ class Dep {
     this.subscribers = []
   }
   depend() {
+    console.log(8, 'depend')
     if (target && !this.subscribers.includes(target)) {
+      console.log('push')
       this.subscribers.push(target)
     }
+    console.log(12, this.subscribers)
   }
   notify() {
     this.subscribers.forEach(sub => sub())
@@ -16,6 +19,7 @@ class Dep {
 
 /**
  * 我们需要一些方法来连接data里的属性（如price或quantity），所以当它被访问时，我们可以将target保存到我们的订阅者数组中，当它被改变时，运行我们存储在订阅者数组中的函数。
+ * get的时候添加进订阅数组 set的时候，运行数组中的函数
  * 我们希望：
  * 当data.price值被访问，我希望price属性的依赖类将我们存储在target中的匿名函数，通过调用dep.depend()将其推到它的订阅者（用来存储target）数组(subscribers)中。
  * 同理，当data.quantity被访问，我同样希望quantity属性的依赖类将这个存储在target中的匿名函数推入其订阅者（用来存储target）数组(subscribers)中。
@@ -27,13 +31,14 @@ Object.keys(data).forEach(key => {
 
   Object.defineProperty(data, key,  {
     get() {
-      console.log(30, dep)
+      console.log(30, key)
       dep.depend()
       return internalValue
     },
     set(newVal) {
       internalValue = newVal
-      console.log(36, newVal, internalValue, data.price, data.quantity)
+      console.log(39, newVal, internalValue)
+      // console.log(36, newVal, internalValue, data.price, data.quantity)
       dep.notify()
     }
   })
@@ -46,7 +51,7 @@ function watcher(myFn) {
 }
 
 watcher(() => {
-  console.log(49, data.price, data.quantity)
+  // console.log(49, data.price, data.quantity)
   data.total = data.price * data.quantity
   console.log(51, data.total)
   /**
