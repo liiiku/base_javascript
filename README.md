@@ -224,6 +224,10 @@ arr.sort((a, b) => b -a) // [9, 6, 5, 2, 1, 0]
 
 7. js 响应式原理 responsive文件
 
+增加了对`proxy`的支持，参看文章：
+
+[数据劫持or数据代理](https://mp.weixin.qq.com/s/SPoxin9LYJ4Bp0goliEaUw, "数据劫持or数据代理")
+
 8. includes
 
 `数组`和`字符串`均有这个方法，判断一个数组或者字符串中是否包含指定值。比较一个对象是否在一个数组中的时候，直接用数组的方法是不行的
